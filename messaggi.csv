@@ -1,0 +1,7 @@
+Destinatario,  Mittente,  Messaggio,  Messaggio_bannato, Ora
+Alex,  a,  Hello world,    N,     2022/11/01 13:04:22
+Alice,  b,  Hello world,    N,     2022/11/01 13:04:22
+Bob,  Alice,  Hello world,    N,     2022/11/01 13:04:22
+Alex,  Bob,  Hello world,    N,     2022/11/01 13:04:22
+Alex,  Alice,  Hello world,    N,     2022/11/01 13:04:22
+
