@@ -1,17 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov  4 14:55:54 2022
-
-@author: Camilla
-"""
-
 # Gestione della chatroom:
-#   l'utente arriva qui dalla pagina di login
+#   se l'utente è loggato avremo nome e flag_admin nel session_state
 #   displaying del log dei messaggi
 #   campo di scrittura di un nuovo messaggio
 #   pulsante di invio messaggio
-#   pulsante di uscita/logout che riporta alla pagina di login
+#   pulsante di uscita/logout
+#   ban dei messaggi se l'utente è admin
 
 
 import streamlit as st
@@ -21,6 +14,8 @@ import datetime as dt
 # import pickle as pkl
 # import os.path
 
+# setting della pagina con icona
+st.set_page_config(page_title="Chatroom", page_icon="🎤")
 
 st.title("Benvenuto!")
 st.subheader("Questa è la chatroom di Whatsapp2.0")
