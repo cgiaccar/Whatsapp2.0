@@ -32,7 +32,8 @@ invia = st.button("Invia")
 if invia:
     file = open(fileMessaggi, 'a')
     writer = csv.writer(file)
-    writer.writerow([" ", messaggio, dt.datetime.now()])
+    writer.writerow([st.session_state['nomeUtente'],
+                    messaggio, dt.datetime.now()])
     file.close()
 
 # logout = st.button("Logout")

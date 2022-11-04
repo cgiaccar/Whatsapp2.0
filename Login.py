@@ -20,6 +20,7 @@ col1, col2 = st.columns(2)
 
 richiestoAccesso = False
 richiestaRegistrazione = False
+st.session_state['nomeUtente'] = 'Anonimo'
 
 
 with col1:
@@ -38,6 +39,9 @@ if ('accessoEseguito' in st.session_state
 
     if 'accessoEseguito' not in st.session_state:
         st.session_state['accessoEseguito'] = [True]
+        st.session_state['nomeUtente'] = utente
+        st.text("\n Ciao " + utente + "!")
+        st.text("Entra pure nella chatroom :)")
 
 else:
     if utente != '' and utente not in listaUtenti['Amici'].unique():
