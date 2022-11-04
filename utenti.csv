@@ -1,7 +1,8 @@
-Amici
-Alex
-Bob
-Alice
-Anna
-a
-Camilla
+Utente,Password,Admin
+Alex,Alexpass,False
+Bob,Bobpass,False
+Alice,Alicepass,False
+Anna,Annapass,False
+a,apass,False
+Camilla,Camillapass,True
+Lorenzo,Lorenzopass,True

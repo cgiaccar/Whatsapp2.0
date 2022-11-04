@@ -6,6 +6,8 @@
 #   pulsante di uscita/logout
 #   ban dei messaggi se l'utente è admin
 
+# TODO non aggiorna la tabella automaticamente all'invio del messaggio
+
 
 import streamlit as st
 import pandas as pd
@@ -16,6 +18,8 @@ import datetime as dt
 
 # setting della pagina con icona
 st.set_page_config(page_title="Chatroom", page_icon="🎤")
+
+st.session_state['nomeUtente'] = 'Anonimo'
 
 st.title("Benvenuto!")
 st.subheader("Questa è la chatroom di Whatsapp2.0")
