@@ -21,6 +21,8 @@ st.set_page_config(page_title="Chatroom", page_icon="🎤")
 
 if 'nomeUtente' not in st.session_state:
     st.session_state['nomeUtente'] = 'Anonimo'
+if 'role' not in st.session_state:
+    st.session_state['role'] = False
 
 st.title("Benvenuto!")
 st.subheader("Questa è la chatroom di Whatsapp2.0")
@@ -45,6 +47,18 @@ if invia:
                     messaggio, dt.datetime.now()])
     file.close()
     table.add_rows(row)
+
+# if True:#st.session_state['role'] == True:
+#     selected_indices = st.multiselect('Select messages to ban:', df.index)
+#     selected_rows = df.loc[selected_indices]
+#     st.write('### Selected Messages', selected_rows)
+#     banhammer = st.button("Ban Messages")
+#     if banhammer:
+#         #file = open(fileMessaggi, 'w')
+#         for x in selected_rows.index:
+#             df.drop(x)
+#         #file.close()
+
 
 # logout = st.button("Logout")
 # if logout:

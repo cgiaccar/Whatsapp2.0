@@ -23,6 +23,8 @@ richiestoAccesso = False
 richiestaRegistrazione = False
 if 'nomeUtente' not in st.session_state:
     st.session_state['nomeUtente'] = 'Anonimo'
+if 'role' not in st.session_state:
+    st.session_state['role'] = False
 
 
 with col1:
@@ -46,6 +48,9 @@ if ('accessoEseguito' in st.session_state
     if 'accessoEseguito' not in st.session_state:
         st.session_state['accessoEseguito'] = [True]
         st.session_state['nomeUtente'] = utente
+        #TODOOOOOOO bisogna recuperare il ruolo dalla riga di utente
+        st.session_state['role'] = False#TODOOOOOOOOOOO
+        #TODOOOOOOO
         st.text("\n Ciao " + utente + "!")
         st.text("Entra pure nella chatroom :)")
 
