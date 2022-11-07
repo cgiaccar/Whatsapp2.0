@@ -21,7 +21,8 @@ col1, col2 = st.columns(2)
 
 richiestoAccesso = False
 richiestaRegistrazione = False
-st.session_state['nomeUtente'] = 'Anonimo'
+if 'nomeUtente' not in st.session_state:
+    st.session_state['nomeUtente'] = 'Anonimo'
 
 
 with col1:

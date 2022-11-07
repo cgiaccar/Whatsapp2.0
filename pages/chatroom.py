@@ -19,7 +19,8 @@ import datetime as dt
 # setting della pagina con icona
 st.set_page_config(page_title="Chatroom", page_icon="🎤")
 
-st.session_state['nomeUtente'] = 'Anonimo'
+if 'nomeUtente' not in st.session_state:
+    st.session_state['nomeUtente'] = 'Anonimo'
 
 st.title("Benvenuto!")
 st.subheader("Questa è la chatroom di Whatsapp2.0")
@@ -27,7 +28,7 @@ st.subheader("Questa è la chatroom di Whatsapp2.0")
 # displaying del log dei messaggi
 fileMessaggi = "logChat.csv"
 df = pd.read_csv(fileMessaggi)
-st.table(df)
+table = st.dataframe(df, use_container_width=True)
 
 # campo di scrittura di un nuovo messaggio
 messaggio = st.text_input("Scrivi un messaggio!")
@@ -36,9 +37,14 @@ invia = st.button("Invia")
 if invia:
     file = open(fileMessaggi, 'a')
     writer = csv.writer(file)
+    #timey serve come variabile String da mettere in row per far funzionare table.add_rows(row)
+    timey = str(dt.datetime.now())
+    row = pd.DataFrame(data={'Mittente':[st.session_state['nomeUtente']], 
+                             'Messaggio':[messaggio], 'Orario':[timey]})
     writer.writerow([st.session_state['nomeUtente'],
                     messaggio, dt.datetime.now()])
     file.close()
+    table.add_rows(row)
 
 # logout = st.button("Logout")
 # if logout:
