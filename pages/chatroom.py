@@ -29,7 +29,12 @@ st.subheader("Questa è la chatroom di Whatsapp2.0")
 
 # displaying del log dei messaggi
 fileMessaggi = "logChat.csv"
-df = pd.read_csv(fileMessaggi)
+try:
+    df = pd.read_csv(fileMessaggi)
+except FileNotFoundError:
+    import os
+    exit('File ' + fileMessaggi + ' non trovato in ' + os.getcwd())
+
 table = st.dataframe(df, use_container_width=True)
 
 # campo di scrittura di un nuovo messaggio

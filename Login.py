@@ -36,7 +36,11 @@ with col2:
         richiestaRegistrazione = True
 
 nomeFileUtenti = "utenti.csv"
-listaUtenti = pd.read_csv(nomeFileUtenti)
+try:
+    listaUtenti = pd.read_csv(nomeFileUtenti)
+except FileNotFoundError:
+    import os
+    exit('File ' + nomeFileUtenti + ' non trovato in ' + os.getcwd())
 
 if ('accessoEseguito' in st.session_state
         or (richiestoAccesso and (((listaUtenti['Utente'] == utente) 
