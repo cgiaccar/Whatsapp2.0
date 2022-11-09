@@ -25,19 +25,19 @@ st.subheader("Questa Ã¨ la chatroom di Whatsapp2.0")
 fileMessaggi = os.path.dirname(os.path.dirname(__file__)) + "/csv/logChat.csv"
 
 try:
-    df = pd.read_csv(fileMessaggi)
+    dfMessaggi = pd.read_csv(fileMessaggi)
 except FileNotFoundError:
     import os
     exit('File ' + fileMessaggi + ' non trovato.')
 
-table = st.dataframe(df, use_container_width=True)
+table = st.dataframe(dfMessaggi, use_container_width=True)
 
 messaggio = st.text_input("Scrivi un messaggio!")
 invia = st.button("Invia")
 if invia:
     file = open(fileMessaggi, 'a')
     writer = csv.writer(file)
-    # è necessario trasformare in string per far funzionare table.add_rows(row)
+    # necessario trasformare in string per far funzionare table.add_rows(row)
     orario = str(dt.datetime.now())
     row = pd.DataFrame(data={'Mittente': [st.session_state['nomeUtente']],
                              'Messaggio': [messaggio], 'Orario': [orario]})
@@ -46,16 +46,17 @@ if invia:
     file.close()
     table.add_rows(row)
 
-# if True:#st.session_state['flag_admin'] == True:
-#     selected_indices = st.multiselect('Select messages to ban:', df.index)
-#     selected_rows = df.loc[selected_indices]
-#     st.write('### Selected Messages', selected_rows)
-#     banhammer = st.button("Ban Messages")
-#     if banhammer:
-#         #file = open(fileMessaggi, 'w')
-#         for x in selected_rows.index:
-#             df.drop(x)
-#         #file.close()
+if st.session_state['flag_admin'] is True:
+    selected_indices = st.multiselect(
+        'Select messages to ban:', dfMessaggi.index)
+    selected_rows = dfMessaggi.loc[selected_indices]
+    st.write('### Selected Messages', selected_rows)
+    banhammer = st.button("Ban Messages")
+    if banhammer:
+        # file = open(fileMessaggi, 'w')
+        for x in selected_rows.index:
+            dfMessaggi.drop(x)
+        # file.close()
 
 logout = st.button("Logout")
 if logout:

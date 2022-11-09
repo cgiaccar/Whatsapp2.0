@@ -42,33 +42,33 @@ with col2:
 fileUtenti = os.path.dirname(__file__) + "/csv/utenti.csv"
 
 try:
-    listaUtenti = pd.read_csv(fileUtenti)
+    dfUtenti = pd.read_csv(fileUtenti)
 except FileNotFoundError:
     exit('File ' + fileUtenti + ' non trovato.')
 
 if ('accessoEseguito' in st.session_state
-        or (richiestoAccesso and (((listaUtenti['Utente'] == utente)
-                                   & (listaUtenti['Password'] == password)).any())
+        or (richiestoAccesso and (((dfUtenti['Utente'] == utente)
+                                   & (dfUtenti['Password'] == password)).any())
             )):
 
     if 'accessoEseguito' not in st.session_state:
         st.session_state['accessoEseguito'] = [True]
         st.session_state['nomeUtente'] = utente
-        # TODOOOOOOO bisogna recuperare il ruolo dalla riga di utente
-        st.session_state['flag_admin'] = False  # TODOOOOOOOOOOO
-        # TODOOOOOOO
+        indiceUtente = dfUtenti[dfUtenti['Utente'] == utente].index[0]
+        flag_admin = dfUtenti.at[indiceUtente, 'Admin']
+        st.session_state['flag_admin'] = flag_admin
         st.text("\n Ciao " + utente + "!")
         st.text("Entra pure nella chatroom :)")
 
 else:
-    if utente != '' and utente not in listaUtenti['Utente'].unique():
+    if utente != '' and utente not in dfUtenti['Utente'].unique():
         st.warning('Utente non censito in archivio', icon="⚠️")
-    elif (password != '' and (((listaUtenti['Utente'] == utente)
-                              & (listaUtenti['Password'] != password)).any())):
+    elif (password != '' and (((dfUtenti['Utente'] == utente)
+                              & (dfUtenti['Password'] != password)).any())):
         st.warning('Password errata!', icon="⚠️")
 
 if richiestaRegistrazione:
-    if utente in listaUtenti['Utente'].unique():
+    if utente in dfUtenti['Utente'].unique():
         st.warning('Utente già censito in archivio', icon="⚠️")
     else:
         if password == '':
