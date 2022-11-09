@@ -46,17 +46,17 @@ if invia:
     file.close()
     table.add_rows(row)
 
-if st.session_state['flag_admin'] is True:
+if st.session_state['flag_admin'] == True:
     selected_indices = st.multiselect(
-        'Select messages to ban:', dfMessaggi.index)
+        'Seleziona i messaggi da bannare:', dfMessaggi.index)
     selected_rows = dfMessaggi.loc[selected_indices]
-    st.write('### Selected Messages', selected_rows)
-    banhammer = st.button("Ban Messages")
+    st.write('Messaggi selezionati', selected_rows)
+    banhammer = st.button("Banna messaggi")
     if banhammer:
-        # file = open(fileMessaggi, 'w')
         for x in selected_rows.index:
-            dfMessaggi.drop(x)
-        # file.close()
+            dfMessaggi.drop(dfMessaggi.index[x], inplace=True)
+            dfMessaggi.to_csv(fileMessaggi, index=False)
+            st.text('Il messaggio ' + str(x) + ' è stato cancellato.')
 
 logout = st.button("Logout")
 if logout:
