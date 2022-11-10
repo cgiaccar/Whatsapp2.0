@@ -53,7 +53,9 @@ if st.session_state['flag_admin'] == True:
     st.write('Messaggi selezionati', selected_rows)
     banhammer = st.button("Banna messaggi")
     if banhammer:
-        for x in selected_rows.index:
+        # per non andare out of bounds nel drop
+        ordered_rows = selected_rows.sort_index(ascending=False)
+        for x in ordered_rows.index:
             dfMessaggi.drop(dfMessaggi.index[x], inplace=True)
             dfMessaggi.to_csv(fileMessaggi, index=False)
             st.text('Il messaggio ' + str(x) + ' è stato cancellato.')
@@ -61,4 +63,5 @@ if st.session_state['flag_admin'] == True:
 logout = st.button("Logout")
 if logout:
     st.session_state['nomeUtente'] = 'Anonimo'
+    st.session_state['flag_admin'] = False
     st.text('Logout effettuato! Ora sei Anonimo')
