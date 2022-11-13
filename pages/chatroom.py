@@ -20,7 +20,7 @@ st.subheader("Questa è la chatroom di Whatsapp2.0")
 if 'nomeUtente' not in st.session_state:
     st.session_state['nomeUtente'] = 'Anonimo'
 else:
-    st.text('Ciao ' + st.session_state['nomeUtente']+'!')
+    st.text('Ciao ' + st.session_state['nomeUtente'] +'!')
     
 if 'flag_admin' not in st.session_state:
     st.session_state['flag_admin'] = False
@@ -63,8 +63,7 @@ if st.session_state['flag_admin'] == True:
             dfMessaggi.to_csv(fileMessaggi, index=False)
             st.text('Il messaggio ' + str(x) + ' è stato cancellato.')
 
-logout = st.button("Logout")
-if logout:
+if st.button("Logout"):
     st.session_state['nomeUtente'] = 'Anonimo'
     st.session_state['flag_admin'] = False
-    st.text('Logout effettuato! Ora sei Anonimo')
+    st.experimental_rerun()
