@@ -2,7 +2,9 @@ Utente,Password,Admin
 Alex,Alexpass,False
 Bob,Bobpass,False
 Alice,Alicepass,False
+Troll,trollpass,False
 Anna,Annapass,False
+Trolldue,tdue,False
 Sandro,Sandropass,True
 Camilla,Camillapass,True
 Lorenzo,Lorenzopass,True
