@@ -15,12 +15,15 @@ import os
 
 st.set_page_config(page_title="Chatroom", page_icon="🎤")
 
+st.subheader("Questa è la chatroom di Whatsapp2.0")
+
 if 'nomeUtente' not in st.session_state:
     st.session_state['nomeUtente'] = 'Anonimo'
+else:
+    st.text('Ciao ' + st.session_state['nomeUtente']+'!')
+    
 if 'flag_admin' not in st.session_state:
     st.session_state['flag_admin'] = False
-
-st.subheader("Questa è la chatroom di Whatsapp2.0")
 
 fileMessaggi = os.path.dirname(os.path.dirname(__file__)) + "/csv/logChat.csv"
 
