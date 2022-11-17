@@ -10,18 +10,19 @@
 import streamlit as st
 import pandas as pd
 import os
+import time
 
 st.set_page_config(page_title="Chatroom", page_icon="ð¤")
 
 st.subheader("Questa è la pagina di gestione utenti di Whatsapp2.0")
 
 if 'flag_admin' not in st.session_state:
-  st.warning('Utente non registrato tramite login', icon="⚠️")
-  st.stop()
+    st.warning('Utente non registrato tramite login', icon="⚠️")
+    st.stop()
 else:
-  if st.session_state['flag_admin'] != True:
-      st.warning('Accesso consentito solo ad utenti admin', icon="⚠️")
-      st.stop()
+    if st.session_state['flag_admin'] != True:
+        st.warning('Accesso consentito solo ad utenti admin', icon="⚠️")
+        st.stop()
 
 fileUtenti = os.path.dirname(os.path.dirname(__file__)) + "/csv/utenti.csv"
 
@@ -33,11 +34,12 @@ except FileNotFoundError:
 
 table = st.dataframe(dfUtenti.iloc[:, [0, 2]], use_container_width=True)
 
+
 def numeroUtentiAdmin(ordered_rows):
-    numUtentiAdmin=0
+    numUtentiAdmin = 0
     for x in ordered_rows.index:
-        if dfUtenti.iloc[x,2]==True:
-            numUtentiAdmin=numUtentiAdmin+1
+        if dfUtenti.iloc[x, 2] == True:
+            numUtentiAdmin = numUtentiAdmin+1
     return numUtentiAdmin
 
 
@@ -52,20 +54,24 @@ if st.session_state['flag_admin'] == True:
         if banhammer:
             # per non andare out of bounds nel drop
             ordered_rows = selected_rows.sort_index(ascending=False)
-            if numeroUtentiAdmin(ordered_rows)==0:
+            if numeroUtentiAdmin(ordered_rows) == 0:
                 for x in ordered_rows.index:
-                    utenteCancellato=dfUtenti.iloc[x,0]
+                    utenteCancellato = dfUtenti.iloc[x, 0]
                     dfUtenti.drop(dfUtenti.index[x], inplace=True)
                     dfUtenti.to_csv(fileUtenti, index=False)
-                    st.text("L'utente " + utenteCancellato + ' è stato cancellato.') 
+                    st.text("L'utente " + utenteCancellato +
+                            ' è stato cancellato.')
             else:
-                st.warning('Gli utenti admin non possono essere bannati. Modificare la selezione.', icon="⚠️")
+                st.warning(
+                    'Gli utenti admin non possono essere bannati. Modificare la selezione.', icon="⚠️")
                 st.stop()
     with col2:
         st.button("Aggiorna lista utenti")
-        
+
 logout = st.button("Logout")
 if logout:
     st.session_state['nomeUtente'] = 'Anonimo'
     st.session_state['flag_admin'] = False
     st.text('Logout effettuato! Ora sei Anonimo')
+    time.sleep(1)
+    st.experimental_rerun()

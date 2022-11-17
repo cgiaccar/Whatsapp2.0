@@ -12,6 +12,7 @@ import pandas as pd
 import csv
 import datetime as dt
 import os
+import time
 
 st.set_page_config(page_title="Chatroom", page_icon="🎤")
 
@@ -20,8 +21,8 @@ st.subheader("Questa è la chatroom di Whatsapp2.0")
 if 'nomeUtente' not in st.session_state:
     st.session_state['nomeUtente'] = 'Anonimo'
 else:
-    st.text('Ciao ' + st.session_state['nomeUtente'] +'!')
-    
+    st.text('Ciao ' + st.session_state['nomeUtente'] + '!')
+
 if 'flag_admin' not in st.session_state:
     st.session_state['flag_admin'] = False
 
@@ -54,16 +55,22 @@ if st.session_state['flag_admin'] == True:
         'Seleziona i messaggi da bannare:', dfMessaggi.index)
     selected_rows = dfMessaggi.loc[selected_indices]
     st.write('Messaggi selezionati', selected_rows)
-    banhammer = st.button("Banna messaggi")
-    if banhammer:
-        # per non andare out of bounds nel drop
-        ordered_rows = selected_rows.sort_index(ascending=False)
-        for x in ordered_rows.index:
-            dfMessaggi.drop(dfMessaggi.index[x], inplace=True)
-            dfMessaggi.to_csv(fileMessaggi, index=False)
-            st.text('Il messaggio ' + str(x) + ' è stato cancellato.')
+    col1, col2 = st.columns(2)
+    with col1:
+        banhammer = st.button("Banna messaggi")
+        if banhammer:
+            # per non andare out of bounds nel drop
+            ordered_rows = selected_rows.sort_index(ascending=False)
+            for x in ordered_rows.index:
+                dfMessaggi.drop(dfMessaggi.index[x], inplace=True)
+                dfMessaggi.to_csv(fileMessaggi, index=False)
+                st.text('Il messaggio ' + str(x) + ' è stato cancellato.')
+    with col2:
+        st.button("Aggiorna log messaggi")
 
 if st.button("Logout"):
     st.session_state['nomeUtente'] = 'Anonimo'
     st.session_state['flag_admin'] = False
+    st.text('Logout effettuato! Ora sei Anonimo')
+    time.sleep(1)
     st.experimental_rerun()
